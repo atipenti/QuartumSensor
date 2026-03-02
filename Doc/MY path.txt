@@ -1,0 +1,26 @@
+C:\Users\atipe\OneDrive\Dokumente\Philippe\MyProjects\Andre\ST-Tools\Dev\stdatalog-pysdk\
+
+For Powershell under stdatalog-üysdk:
+>> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+>> .\.venv\Scripts\Activate.ps1
+
+(venv) > cd..
+
+(venv) > cd mystdatalog-app
+
+STart another Powershell Window under venv:
+Start-Process powershell -ArgumentList "-NoExit", "-ExecutionPolicy Bypass", "-File", ".\.venv\Scripts\Activate.ps1"
+
+
+
+
+FOR TUI:
+under stdatalog-pysdk:
+# 1. Den Windows-Fix registrieren
+python .venv/Scripts/pywin32_postinstall.py -install
+
+# 2. Das Modul sicherheitshalber neu erzwingen
+pip install --force-reinstall pywin32
+
+ C:\Users\atipe\OneDrive\Dokumente\Philippe\MyProjects\Andre\ST-Tools\Dev\STDATALOG-PYSDK\stdatalog_examples\gui_applications\stdatalog\tui
+

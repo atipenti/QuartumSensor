@@ -1,0 +1,1 @@
+py -3.13 -c "import sys; from PySide6.QtWidgets import QApplication; from stdatalog_gui.HSD_GUI.HSD_MainWindow import HSD_MainWindow; app = QApplication(sys.argv); window = HSD_MainWindow(app); window.show(); sys.exit(app.exec())"

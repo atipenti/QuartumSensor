@@ -1,0 +1,13 @@
+{
+    "tags": [],
+    "name": "ToF_Data_Log",
+    "description": "ST_Reference_Format",
+    "uuid": "0088d800-6bd9-48ca-812c-6f9279c7855c",
+    "start_time": "2026-02-24T21:36:50.000Z",
+    "end_time": "2026-02-24T21:37:08.930Z",
+    "data_ext": ".dat",
+    "data_fmt": "HSD_2.0.0",
+    "interface": 1,
+    "schema_version": "2.0.0",
+    "c_type": 2
+}

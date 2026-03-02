@@ -1,0 +1,26 @@
+
+{
+    "app_name": "MyGUI_Consumer_v1",
+    "network_config": {
+        "ip": "127.0.0.1",
+        "sensors": {
+            "vl53l8cx_tof": {
+                "port": 12345,
+                "enabled": false,
+                "rotation": 3,
+                "flip_x": true, 
+                "flip_y": false,
+                "label_x": "Flipped",
+                "label_y": "Normal"
+            },
+            "sths34pf80_tmos": {
+                "port": 12344,
+                "enabled": true
+            },
+            "Microphone": {
+                "port": 12346,
+                "enabled": false
+            }
+        }
+    }
+}

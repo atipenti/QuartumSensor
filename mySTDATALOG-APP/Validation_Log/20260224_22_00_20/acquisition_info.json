@@ -1,0 +1,13 @@
+{
+    "tags": [],
+    "name": "STWIN.Box_acquisition",
+    "description": "",
+    "uuid": "264379b8-05d9-4f41-a038-4017668a9d14",
+    "start_time": "2026-02-24T22:00:20.000Z",
+    "end_time": "2026-02-24T22:00:33.948Z",
+    "data_ext": ".dat",
+    "data_fmt": "HSD_2.0.0",
+    "interface": 1,
+    "schema_version": "2.0.0",
+    "c_type": 2
+}

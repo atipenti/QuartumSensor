@@ -1,0 +1,13 @@
+{
+    "tags": [],
+    "name": "TofTest",
+    "description": "Validator check",
+    "uuid": "0910388e-3bd8-4def-8423-abb5258b6ebf",
+    "start_time": "2026-02-24T21:20:10.000Z",
+    "end_time": "2026-02-24T21:20:18.937Z",
+    "data_ext": ".dat",
+    "data_fmt": "HSD_2.0.0",
+    "interface": 1,
+    "schema_version": "2.0.0",
+    "c_type": 2
+}
