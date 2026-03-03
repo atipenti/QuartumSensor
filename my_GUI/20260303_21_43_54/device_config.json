@@ -1,6 +1,6 @@
 {
     "schema_version": "2.2.0",
-    "uuid": "13aa01bb-4faa-49c6-85fc-d28c081008e2",
+    "uuid": "5731a6df-5e22-43d8-8066-58fe50d02eec",
     "devices": [
         {
             "board_id": 14,
@@ -228,12 +228,12 @@
                 {
                     "vl53l8cx_tof": {
                         "enable": true,
-                        "resolution": 1,
+                        "resolution": 0,
                         "odr": 10,
                         "ranging_mode": 0,
                         "integration_time": 10,
                         "samples_per_ts": 10,
-                        "ioffset": 0.36914438009262085,
+                        "ioffset": 0,
                         "usb_dps": 136,
                         "sd_dps": 512,
                         "data_type": "uint32_t",
@@ -279,7 +279,7 @@
                         "compensation_filter_flag": true,
                         "absence_static_flag": false,
                         "samples_per_ts": 15,
-                        "ioffset": 0.010476387105882168,
+                        "ioffset": 0.020436368882656097,
                         "usb_dps": 30,
                         "sd_dps": 342,
                         "data_type": "int16_t",
@@ -304,7 +304,7 @@
                         "channel5_gain": 2,
                         "channel6_gain": 2,
                         "samples_per_ts": 1,
-                        "ioffset": 1.000995397567749,
+                        "ioffset": 0,
                         "usb_dps": 32,
                         "sd_dps": 36,
                         "data_type": "uint32_t",

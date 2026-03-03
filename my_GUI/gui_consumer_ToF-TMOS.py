@@ -78,30 +78,52 @@ class MultiSensorConsumer:
             self.tof_resolution = dim  # Update the UI resolution to match
 
     def draw_tmos_dashboard(self, data):
-        # Index mapping from your FIXED HSDPlotTMOSWidget.py:
-        # data[1] = ObjTemp (e.g. -3100), data[4] = Presence, data[6] = Motion
-        obj_temp = data[1]
-        presence = data[4] > 0
-        motion = data[6] > 0
+        # Php 20260303 - Alternative to use the Objtemp value as Gauge % instead of the Presence value variation %
+        # data[1] = ObjTemp, data[4] = Raw Presence, data[6] = Raw Motion
+        # Uncomment the below lines to use th ObjTemp gauge instead of the presence gauge %
+        #obj_temp = float(data[1])
+        #presence_triggered = float(data[4]) > 0
+        #motion_triggered = float(data[6]) > 0
+        #center_x = 725 
+        # Indicators
+        #pres_color = (0, 255, 255) if presence_triggered else (20, 40, 40)
+        #pygame.draw.circle(self.screen, pres_color, (center_x - 50, 100), 30)
+        #mot_color = (255, 0, 0) if motion_triggered else (40, 20, 20)
+        #pygame.draw.circle(self.screen, mot_color, (center_x + 50, 100), 30)
+        # Gauge Logic: Use ObjTemp to drive the Heat Intensity
+        # Normalizing: -3500 (cold) to -1500 (hot)
+        #gauge_val = ((obj_temp - (-3500)) / 2000) * 100
+        #gauge_val = max(0, min(100, gauge_val))
+        #self.draw_gauge(center_x, 350, gauge_val)
+
+        # Php 20260303 - Alternative to use the presence as Gauge % instead of the ObjTemp value variation %
+        # Data Mapping:
+        # data[3] = Presence Signal (Strength of heat contrast)
+        # data[4] = Presence Flag, data[6] = Motion Flag
+        presence_triggered = float(data[4]) > 0
+        motion_triggered = float(data[6]) > 0
         center_x = 725 
 
-        # 1. Presence Indicator (Cyan)
-        p_col = (0, 255, 255) if presence else (20, 40, 40)
-        pygame.draw.circle(self.screen, p_col, (center_x - 50, 100), 30)
-        self.screen.blit(self.small_font.render("PRESENCE", True, (200,200,200)), (center_x - 85, 140))
+        # Indicators
+        pres_color = (0, 255, 255) if presence_triggered else (20, 40, 40)
+        pygame.draw.circle(self.screen, pres_color, (center_x - 50, 100), 30)
+        
+        mot_color = (255, 0, 0) if motion_triggered else (40, 20, 20)
+        pygame.draw.circle(self.screen, mot_color, (center_x + 50, 100), 30)
 
-        # 2. Motion Indicator (Red)
-        m_col = (255, 0, 0) if motion else (40, 20, 20)
-        pygame.draw.circle(self.screen, m_col, (center_x + 50, 100), 30)
-        self.screen.blit(self.small_font.render("MOTION", True, (200,200,200)), (center_x + 25, 140))
-
-        # 3. Heat Intensity Gauge
-        # Your "Quiet" state is ~ -3100. Your "Active" state is ~ -1900.
-        # We map that range to 0-100%
-        gauge_val = ((obj_temp - (-3500)) / 2000) * 100
+        # --- NEW GAUGE LOGIC ---
+        # 1. Extract the Presence Signal magnitude
+        pres_signal = abs(float(data[3]))
+        
+        # 2. Normalize to 0-100%
+        # Based on your logs, an empty room is ~0 and a person right underneath is ~600.
+        gauge_val = (pres_signal / 600.0) * 100
+        
+        # 3. Clamp the value so the gauge needle doesn't break out of the circle
         gauge_val = max(0, min(100, gauge_val))
         
         self.draw_gauge(center_x, 350, gauge_val)
+
 
 
     def draw_gauge(self, x, y, value):
@@ -151,7 +173,7 @@ class MultiSensorConsumer:
                         self.process_tof(payload, settings)
                     elif sensor_name == "sths34pf80_tmos":
                         # DEBUG: Confirm we are actually getting TMOS data
-                        # print(f"✅ TMOS Data: {payload['data']}") 
+                        print(f"✅ TMOS Data: {payload['data']}") 
                         with self.lock:
                             self.last_tmos_data = payload["data"]
                 else:
@@ -205,9 +227,16 @@ class MultiSensorConsumer:
                 
                 if self.last_tmos_data is not None:
                     d = self.last_tmos_data
-                    # FIXED PRINT: Reach the actual values received from the Broadcaster
-                    print(f"ObjTemp: {d[1]:.1f} | Presence: {d[4]} | Motion: {d[6]}")
-                    self.draw_tmos_dashboard(self.last_tmos_data)
+
+                    # DO NOT use a loop here. Access the indices directly:
+                    temp_val = d[1]
+                    pres_val = d[4]
+                    mot_val = d[6]
+                
+                    print(f"ObjTemp: {temp_val:.1f} | Presence: {pres_val} | Motion: {mot_val}")
+                    self.draw_tmos_dashboard(d)
+                
+                    
                 else:
                     # DRAW A PLACEHOLDER: If no data, show a message so we know the dashboard logic is alive
                     msg = self.font.render("Waiting for TMOS data...", True, (100, 100, 100))

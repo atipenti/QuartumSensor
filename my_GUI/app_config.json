@@ -6,7 +6,7 @@
         "sensors": {
             "vl53l8cx_tof": {
                 "port": 12345,
-                "enabled": false,
+                "enabled": true,
                 "rotation": 3,
                 "flip_x": true, 
                 "flip_y": false,
